@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary, My Love 💕</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        velvet: '#0F0C20',
+                        blush: '#FFB7C5',
+                        rose: '#FF2E63',
+                        gold: '#F7D070',
+                        glass: 'rgba(255, 255, 255, 0.1)',
+                        'glass-light': 'rgba(255, 255, 255, 0.2)',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'soundwave': 'soundwave 1s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        soundwave: {
+                            '0%, 100%': { height: '8px' },
+                            '50%': { height: '20px' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        /* Custom Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0F0C20 0%, #1a1530 50%, #0F0C20 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: pointer;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(255, 183, 197, 0.5);
+            box-shadow: 0 8px 32px rgba(255, 46, 99, 0.2);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #FFB7C5, #FF2E63, #F7D070);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            animation: float-up 2s ease-out forwards;
+        }
+        
+        @keyframes float-up {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0);
+            }
+        }
+        
+        /* Envelope Styles */
+        .envelope-container {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+        
+        .envelope {
+            width: 300px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        
+        .envelope:hover {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+        
+        .envelope.open {
+            transform: rotateX(180deg);
+        }
+        
+        .envelope-front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FF2E63, #FF6B8A);
+            border-radius: 10px;
+            transform: translateZ(50px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(255, 46, 99, 0.4);
+        }
+        
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FF6B8A, #FF2E63);
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+        
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+        
+        .envelope-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FFB7C5, #FF6B8A);
+            border-radius: 10px;
+            transform: rotateY(180deg) translateZ(50px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Timeline Styles */
+        .timeline-item {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .timeline-item:nth-child(even) {
+            transform: translateX(50px);
+        }
+        
+        /* Polaroid Card */
+        .polaroid {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        
+        .polaroid:hover {
+            transform: scale(1.05) rotate3d(1, 1, 0, 5deg);
+            z-index: 10;
+        }
+        
+        /* Audio Player */
+        .audio-pill {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .audio-pill:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 32px rgba(255, 46, 99, 0.3);
+        }
+        
+        .soundwave-bar {
+            animation: soundwave 1s ease-in-out infinite;
+        }
+        
+        .soundwave-bar:nth-child(2) { animation-delay: 0.1s; }
+        .soundwave-bar:nth-child(3) { animation-delay: 0.2s; }
+        .soundwave-bar:nth-child(4) { animation-delay: 0.3s; }
+        .soundwave-bar:nth-child(5) { animation-delay: 0.4s; }
+        
+        /* Modal */
+        .modal-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            transform: scale(0.8) translateY(50px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+        
+        /* Lock Screen */
+        .lock-screen {
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+        }
+        
+        .lock-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .lock-input:focus {
+            outline: none;
+            border-color: #FF2E63;
+            box-shadow: 0 0 20px rgba(255, 46, 99, 0.3);
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 183, 197, 0.5);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 183, 197, 0.8);
+        }
+        
+        /* Tape Effect */
+        .tape {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            width: 80px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Digit Cards */
+        .digit-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .digit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(255, 46, 99, 0.3);
+        }
+    </style>
+</head>
+<body class="font-sans text-white antialiased">
+    
+    <!-- CUSTOMIZE: Lock Screen Password -->
+    <script>
+        const SECRET_CODE = "1214"; // Change this to your special date/password
+        const USE_LOCK_SCREEN = true; // Set to false to disable lock screen
+    </script>
+    
+    <!-- Lock Screen Overlay -->
+    <div id="lockScreen" class="lock-screen fixed inset-0 z-50 flex items-center justify-center bg-velvet/95">
+        <div class="text-center p-8 max-w-md mx-auto">
+            <div class="mb-8">
+                <i data-lucide="heart" class="w-16 h-16 text-rose mx-auto animate-pulse-slow"></i>
+            </div>
+            <h1 class="font-serif text-3xl md:text-4xl mb-4 gradient-text">Enter Our Secret Code</h1>
+            <!-- CUSTOMIZE: Lock Screen Question -->
+            <p class="text-blush/80 mb-8">When did we share our first kiss?</p>
+            <div class="space-y-4">
+                <input type="password" id="lockInput" maxlength="4" placeholder="MMDD" 
+                    class="lock-input w-full px-6 py-4 rounded-2xl text-center text-2xl tracking-widest text-white placeholder-white/30">
+                <button id="unlockBtn" 
+                    class="w-full px-8 py-4 bg-gradient-to-r from-rose to-blush rounded-2xl font-semibold text-white hover:shadow-lg hover:shadow-rose/30 transition-all duration-300 transform hover:scale-105">
+                    Unlock Our Memories 🔓
+                </button>
+                <p id="errorMsg" class="text-rose text-sm hidden">Incorrect code, my love! Try again 💕</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Canvas Background -->
+    <canvas id="bgCanvas" class="fixed inset-0 z-0"></canvas>
+    
+    <!-- Audio Player (Top Right Fixed) -->
+    <div class="fixed top-6 right-6 z-40 audio-pill glass-card rounded-full px-4 py-3 flex items-center gap-3">
+        <button id="playPauseBtn" class="w-10 h-10 rounded-full bg-gradient-to-r from-rose to-blush flex items-center justify-center hover:scale-110 transition-transform">
+            <i data-lucide="play" class="w-4 h-4 text-white fill-current"></i>
+        </button>
+        <div class="flex items-center gap-1 h-6">
+            <div class="soundwave-bar w-1 bg-rose rounded-full" style="height: 8px;"></div>
+            <div class="soundwave-bar w-1 bg-blush rounded-full" style="height: 12px;"></div>
+            <div class="soundwave-bar w-1 bg-gold rounded-full" style="height: 16px;"></div>
+            <div class="soundwave-bar w-1 bg-rose rounded-full" style="height: 12px;"></div>
+            <div class="soundwave-bar w-1 bg-blush rounded-full" style="height: 8px;"></div>
+        </div>
+        <button id="volumeBtn" class="hover:text-blush transition-colors">
+            <i data-lucide="volume-2" class="w-4 h-4"></i>
+        </button>
+        <!-- CUSTOMIZE: Audio File Path -->
+        <audio id="audioPlayer" loop>
+            <source src="./audio/our-song.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="relative z-10">
+        
+        <!-- Hero Section -->
+        <section class="min-h-screen flex items-center justify-center px-4 py-20">
+            <div class="text-center max-w-4xl mx-auto">
+                <!-- CUSTOMIZE: Hero Title -->
+                <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl mb-6 gradient-text animate-float">
+                    Happy Anniversary
+                </h1>
+                <!-- CUSTOMIZE: Hero Subtitle -->
+                <p class="text-xl md:text-2xl text-blush/80 mb-12 font-light">
+                    Every moment with you is a beautiful dream ✨
+                </p>
+                
+                <!-- Time Counter -->
+                <div class="glass-card rounded-3xl p-8 mb-16 inline-block">
+                    <!-- CUSTOMIZE: Start Date for Relationship -->
+                    <script>
+                        const START_DATE = "2023-01-01T00:00:00"; // Format: YYYY-MM-DDTHH:MM:SS
+                    </script>
+                    <div id="timer" class="grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-4">
+                        <div class="digit-card rounded-xl p-3 md:p-4 min-w-[70px] md:min-w-[90px]">
+                            <div id="years" class="text-2xl md:text-3xl font-bold text-gold">0</div>
+                            <div class="text-xs md:text-sm text-blush/70 mt-1">Years</div>
+                        </div>
+                        <div class="digit-card rounded-xl p-3 md:p-4 min-w-[70px] md:min-w-[90px]">
+                            <div id="months" class="text-2xl md:text-3xl font-bold text-rose">0</div>
+                            <div class="text-xs md:text-sm text-blush/70 mt-1">Months</div>
+                        </div>
+                        <div class="digit-card rounded-xl p-3 md:p-4 min-w-[70px] md:min-w-[90px]">
+                            <div id="days" class="text-2xl md:text-3xl font-bold text-blush">0</div>
+                            <div class="text-xs md:text-sm text-blush/70 mt-1">Days</div>
+                        </div>
+                        <div class="digit-card rounded-xl p-3 md:p-4 min-w-[70px] md:min-w-[90px]">
+                            <div id="hours" class="text-2xl md:text-3xl font-bold text-gold">0</div>
+                            <div class="text-xs md:text-sm text-blush/70 mt-1">Hours</div>
+                        </div>
+                        <div class="digit-card rounded-xl p-3 md:p-4 min-w-[70px] md:min-w-[90px]">
+                            <div id="minutes" class="text-2xl md:text-3xl font-bold text-rose">0</div>
+                            <div class="text-xs md:text-sm text-blush/70 mt-1">Minutes</div>
+                        </div>
+                        <div class="digit-card rounded-xl p-3 md:p-4 min-w-[70px] md:min-w-[90px]">
+                            <div id="seconds" class="text-2xl md:text-3xl font-bold text-blush">0</div>
+                            <div class="text-xs md:text-sm text-blush/70 mt-1">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 3D Envelope -->
+                <div class="envelope-container mb-12">
+                    <div class="envelope" id="envelope">
+                        <div class="envelope-front">
+                            <i data-lucide="heart" class="w-12 h-12 text-white/80"></i>
+                        </div>
+                        <div class="envelope-flap"></div>
+                        <div class="envelope-back">
+                            <span class="text-white font-serif text-lg">Open Me 💌</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-blush/60 text-sm animate-pulse">Click the envelope to open</p>
+            </div>
+        </section>
+        
+        <!-- Timeline Section -->
+        <section class="py-20 px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="font-serif text-4xl md:text-5xl text-center mb-16 gradient-text">Our Beautiful Journey</h2>
+                
+                <div class="relative">
+                    <!-- Timeline Line -->
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-rose via-blush to-gold opacity-30"></div>
+                    
+                    <!-- CUSTOMIZE: Timeline Items -->
+                    <div class="space-y-16">
+                        <!-- Item 1 -->
+                        <div class="timeline-item relative flex items-center">
+                            <div class="w-1/2 pr-8 text-right hidden md:block">
+                                <div class="glass-card rounded-2xl p-6 hover:scale-105 transition-transform">
+                                    <!-- CUSTOMIZE: Timeline Date 1 -->
+                                    <div class="text-gold font-semibold mb-2">January 1, 2023</div>
+                                    <!-- CUSTOMIZE: Timeline Title 1 -->
+                                    <h3 class="font-serif text-xl mb-2">The Day We Met</h3>
+                                    <!-- CUSTOMIZE: Timeline Description 1 -->
+                                    <p class="text-blush/70 text-sm">Everything changed when our eyes met for the first time...</p>
+                                </div>
+                            </div>
+                            <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-rose rounded-full border-4 border-velvet z-10"></div>
+                            <div class="w-1/2 md:hidden pl-8">
+                                <div class="glass-card rounded-2xl p-6">
+                                    <div class="text-gold font-semibold mb-2">January 1, 2023</div>
+                                    <h3 class="font-serif text-xl mb-2">The Day We Met</h3>
+                                    <p class="text-blush/70 text-sm">Everything changed when our eyes met for the first time...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Item 2 -->
+                        <div class="timeline-item relative flex items-center">
+                            <div class="w-1/2 md:hidden pr-8 text-right">
+                                <div class="glass-card rounded-2xl p-6">
+                                    <div class="text-rose font-semibold mb-2">February 14, 2023</div>
+                                    <h3 class="font-serif text-xl mb-2">First Date</h3>
+                                    <p class="text-blush/70 text-sm">Our magical evening under the stars...</p>
+                                </div>
+                            </div>
+                            <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blush rounded-full border-4 border-velvet z-10"></div>
+                            <div class="w-1/2 pl-8 hidden md:block">
+                                <div class="glass-card rounded-2xl p-6 hover:scale-105 transition-transform">
+                                    <div class="text-rose font-semibold mb-2">February 14, 2023</div>
+                                    <h3 class="font-serif text-xl mb-2">First Date</h3>
+                                    <p class="text-blush/70 text-sm">Our magical evening under the stars...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Item 3 -->
+                        <div class="timeline-item relative flex items-center">
+                            <div class="w-1/2 pr-8 text-right hidden md:block">
+                                <div class="glass-card rounded-2xl p-6 hover:scale-105 transition-transform">
+                                    <div class="text-blush font-semibold mb-2">June 15, 2023</div>
+                                    <h3 class="font-serif text-xl mb-2">First "I Love You"</h3>
+                                    <p class="text-blush/70 text-sm">The words that changed everything forever...</p>
+                                </div>
+                            </div>
+                            <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gold rounded-full border-4 border-velvet z-10"></div>
+                            <div class="w-1/2 md:hidden pl-8">
+                                <div class="glass-card rounded-2xl p-6">
+                                    <div class="text-blush font-semibold mb-2">June 15, 2023</div>
+                                    <h3 class="font-serif text-xl mb-2">First "I Love You"</h3>
+                                    <p class="text-blush/70 text-sm">The words that changed everything forever...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Item 4 -->
+                        <div class="timeline-item relative flex items-center">
+                            <div class="w-1/2 md:hidden pr-8 text-right">
+                                <div class="glass-card rounded-2xl p-6">
+                                    <div class="text-gold font-semibold mb-2">December 25, 2023</div>
+                                    <h3 class="font-serif text-xl mb-2">First Christmas Together</h3>
+                                    <p class="text-blush/70 text-sm">Creating memories that will last a lifetime...</p>
+                                </div>
+                            </div>
+                            <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-rose rounded-full border-4 border-velvet z-10"></div>
+                            <div class="w-1/2 pl-8 hidden md:block">
+                                <div class="glass-card rounded-2xl p-6 hover:scale-105 transition-transform">
+                                    <div class="text-gold font-semibold mb-2">December 25, 2023</div>
+                                    <h3 class="font-serif text-xl mb-2">First Christmas Together</h3>
+                                    <p class="text-blush/70 text-sm">Creating memories that will last a lifetime...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Memory Grid Section -->
+        <section class="py-20 px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="font-serif text-4xl md:text-5xl text-center mb-16 gradient-text">Our Precious Memories</h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- CUSTOMIZE: Photo Gallery - Replace image paths and captions -->
+                    <!-- Photo 1 -->
+                    <div class="polaroid glass-card rounded-lg p-4 cursor-pointer" data-image="./images/photo1.jpg">
+                        <div class="tape"></div>
+                        <!-- CUSTOMIZE: Photo 1 Placeholder -->
+                        <div class="aspect-square bg-gradient-to-br from-rose/20 to-blush/20 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                            <img src="./images/photo1.jpg" alt="Memory 1" class="w-full h-full object-cover onerror-hide" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="hidden w-full h-full items-center justify-center text-blush/50">
+                                <i data-lucide="image" class="w-16 h-16"></i>
+                            </div>
+                        </div>
+                        <!-- CUSTOMIZE: Photo 1 Caption -->
+                        <p class="font-serif text-center text-blush">Our First Adventure 🌸</p>
+                    </div>
+                    
+                    <!-- Photo 2 -->
+                    <div class="polaroid glass-card rounded-lg p-4 cursor-pointer" data-image="./images/photo2.jpg">
+                        <div class="tape"></div>
+                        <div class="aspect-square bg-gradient-to-br from-blush/20 to-gold/20 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                            <img src="./images/photo2.jpg" alt="Memory 2" class="w-full h-full object-cover onerror-hide" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="hidden w-full h-full items-center justify-center text-blush/50">
+                                <i data-lucide="image" class="w-16 h-16"></i>
+                            </div>
+                        </div>
+                        <p class="font-serif text-center text-blush">Sunset Dreams 🌅</p>
+                    </div>
+                    
+                    <!-- Photo 3 -->
+                    <div class="polaroid glass-card rounded-lg p-4 cursor-pointer" data-image="./images/photo3.jpg">
+                        <div class="tape"></div>
+                        <div class="aspect-square bg-gradient-to-br from-gold/20 to-rose/20 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                            <img src="./images/photo3.jpg" alt="Memory 3" class="w-full h-full object-cover onerror-hide" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="hidden w-full h-full items-center justify-center text-blush/50">
+                                <i data-lucide="image" class="w-16 h-16"></i>
+                            </div>
+                        </div>
+                        <p class="font-serif text-center text-blush">Laughing Together 😊</p>
+                    </div>
+                    
+                    <!-- Photo 4 -->
+                    <div class="polaroid glass-card rounded-lg p-4 cursor-pointer" data-image="./images/photo4.jpg">
+                        <div class="tape"></div>
+                        <div class="aspect-square bg-gradient-to-br from-rose/20 to-gold/20 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                            <img src="./images/photo4.jpg" alt="Memory 4" class="w-full h-full object-cover onerror-hide" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="hidden w-full h-full items-center justify-center text-blush/50">
+                                <i data-lucide="image" class="w-16 h-16"></i>
+                            </div>
+                        </div>
+                        <p class="font-serif text-center text-blush">Cozy Moments ☕</p>
+                    </div>
+                    
+                    <!-- Photo 5 -->
+                    <div class="polaroid glass-card rounded-lg p-4 cursor-pointer" data-image="./images/photo5.jpg">
+                        <div class="tape"></div>
+                        <div class="aspect-square bg-gradient-to-br from-blush/20 to-rose/20 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                            <img src="./images/photo5.jpg" alt="Memory 5" class="w-full h-full object-cover onerror-hide" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="hidden w-full h-full items-center justify-center text-blush/50">
+                                <i data-lucide="image" class="w-16 h-16"></i>
+                            </div>
+                        </div>
+                        <p class="font-serif text-center text-blush">Travel Adventures ✈️</p>
+                    </div>
+                    
+                    <!-- Photo 6 -->
+                    <div class="polaroid glass-card rounded-lg p-4 cursor-pointer" data-image="./images/photo6.jpg">
+                        <div class="tape"></div>
+                        <div class="aspect-square bg-gradient-to-br from-gold/20 to-blush/20 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                            <img src="./images/photo6.jpg" alt="Memory 6" class="w-full h-full object-cover onerror-hide" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="hidden w-full h-full items-center justify-center text-blush/50">
+                                <i data-lucide="image" class="w-16 h-16"></i>
+                            </div>
+                        </div>
+                        <p class="font-serif text-center text-blush">Forever & Always 💕</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="py-12 px-4 text-center">
+            <div class="max-w-2xl mx-auto">
+                <!-- CUSTOMIZE: Footer Message -->
+                <p class="font-serif text-2xl text-blush/80 mb-4">Here's to many more years of love and happiness</p>
+                <div class="flex justify-center items-center gap-2 text-rose">
+                    <i data-lucide="heart" class="w-5 h-5 fill-current"></i>
+                    <span class="font-semibold">Forever Yours</span>
+                    <i data-lucide="heart" class="w-5 h-5 fill-current"></i>
+                </div>
+            </div>
+        </footer>
+    </main>
+    
+    <!-- Love Letter Modal -->
+    <div id="letterModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4 lightbox bg-velvet/90">
+        <div class="modal-content glass-card rounded-3xl p-8 md:p-12 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <button id="closeModal" class="absolute top-4 right-4 text-blush/70 hover:text-rose transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <!-- CUSTOMIZE: Love Letter Content -->
+            <div class="text-center">
+                <div class="mb-8">
+                    <i data-lucide="heart" class="w-12 h-12 text-rose mx-auto animate-pulse-slow"></i>
+                </div>
+                
+                <h2 class="font-serif text-3xl md:text-4xl mb-6 gradient-text">My Dearest Love,</h2>
+                
+                <div class="space-y-4 text-blush/90 leading-relaxed text-left md:text-center">
+                    <!-- CUSTOMIZE: Letter Paragraph 1 -->
+                    <p>
+                        From the moment you walked into my life, everything became brighter, more beautiful, and infinitely more meaningful. You are the poetry I never knew how to write, the melody I always hoped to hear.
+                    </p>
+                    
+                    <!-- CUSTOMIZE: Letter Paragraph 2 -->
+                    <p>
+                        Every day with you feels like a precious gift. Your laughter is my favorite song, your smile is my sunshine on cloudy days, and your love is the anchor that keeps me grounded.
+                    </p>
+                    
+                    <!-- CUSTOMIZE: Letter Paragraph 3 -->
+                    <p>
+                        Thank you for being my partner, my best friend, and my greatest adventure. Here's to countless more memories, endless laughter, and a love that grows stronger with each passing day.
+                    </p>
+                    
+                    <!-- CUSTOMIZE: Letter Closing -->
+                    <p class="font-serif text-xl text-gold mt-8">
+                        Forever and always,<br>
+                        Yours completely 💕
+                    </p>
+                </div>
+                
+                <div class="mt-8 pt-8 border-t border-white/10">
+                    <p class="text-blush/60 text-sm">P.S. You make every day feel like our anniversary ✨</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Photo Lightbox -->
+    <div id="photoLightbox" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4 lightbox bg-velvet/95">
+        <button id="closeLightbox" class="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-10">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <img id="lightboxImage" src="" alt="Full size memory" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl">
+    </div>
+    
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // ===== LOCK SCREEN FUNCTIONALITY =====
+        const lockScreen = document.getElementById('lockScreen');
+        const lockInput = document.getElementById('lockInput');
+        const unlockBtn = document.getElementById('unlockBtn');
+        const errorMsg = document.getElementById('errorMsg');
+        
+        if (!USE_LOCK_SCREEN) {
+            lockScreen.style.display = 'none';
+        }
+        
+        function checkCode() {
+            const input = lockInput.value;
+            if (input === SECRET_CODE) {
+                // Success animation
+                lockScreen.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                lockScreen.style.opacity = '0';
+                lockScreen.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    lockScreen.style.display = 'none';
+                    // Trigger confetti on unlock
+                    confetti({
+                        particleCount: 150,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#FF2E63', '#FFB7C5', '#F7D070']
+                    });
+                }, 800);
+            } else {
+                errorMsg.classList.remove('hidden');
+                lockInput.classList.add('animate-pulse');
+                setTimeout(() => lockInput.classList.remove('animate-pulse'), 500);
+            }
+        }
+        
+        unlockBtn.addEventListener('click', checkCode);
+        lockInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkCode();
+        });
+        
+        // ===== AUDIO PLAYER =====
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const volumeBtn = document.getElementById('volumeBtn');
+        const soundwaveBars = document.querySelectorAll('.soundwave-bar');
+        let isPlaying = false;
+        
+        playPauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audioPlayer.pause();
+                playPauseBtn.innerHTML = '<i data-lucide="play" class="w-4 h-4 text-white fill-current"></i>';
+                soundwaveBars.forEach(bar => bar.style.animationPlayState = 'paused');
+            } else {
+                audioPlayer.play().catch(e => {
+                    console.log('Autoplay prevented:', e);
+                    alert('Please interact with the page to enable audio playback 💕');
+                });
+                playPauseBtn.innerHTML = '<i data-lucide="pause" class="w-4 h-4 text-white fill-current"></i>';
+                soundwaveBars.forEach(bar => bar.style.animationPlayState = 'running');
+            }
+            isPlaying = !isPlaying;
+            lucide.createIcons();
+        });
+        
+        volumeBtn.addEventListener('click', () => {
+            if (audioPlayer.muted) {
+                audioPlayer.muted = false;
+                volumeBtn.innerHTML = '<i data-lucide="volume-2" class="w-4 h-4"></i>';
+            } else {
+                audioPlayer.muted = true;
+                volumeBtn.innerHTML = '<i data-lucide="volume-x" class="w-4 h-4"></i>';
+            }
+            lucide.createIcons();
+        });
+        
+        // Initialize soundwave paused
+        soundwaveBars.forEach(bar => bar.style.animationPlayState = 'paused');
+        
+        // ===== TIME COUNTER =====
+        function updateTimer() {
+            const start = new Date(START_DATE);
+            const now = new Date();
+            const diff = now - start;
+            
+            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+            const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * 30.44));
+            const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('years').textContent = String(years).padStart(2, '0');
+            document.getElementById('months').textContent = String(months).padStart(2, '0');
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        
+        setInterval(updateTimer, 1000);
+        updateTimer();
+        
+        // ===== ENVELOPE & MODAL =====
+        const envelope = document.getElementById('envelope');
+        const letterModal = document.getElementById('letterModal');
+        const closeModal = document.getElementById('closeModal');
+        
+        envelope.addEventListener('click', () => {
+            envelope.classList.add('open');
+            setTimeout(() => {
+                letterModal.classList.add('active');
+                // Confetti burst
+                confetti({
+                    particleCount: 200,
+                    spread: 100,
+                    origin: { y: 0.6 },
+                    colors: ['#FF2E63', '#FFB7C5', '#F7D070', '#FFFFFF'],
+                    shapes: ['heart', 'circle'],
+                    gravity: 0.8,
+                    scalar: 1.2
+                });
+            }, 600);
+        });
+        
+        closeModal.addEventListener('click', () => {
+            letterModal.classList.remove('active');
+            envelope.classList.remove('open');
+        });
+        
+        letterModal.addEventListener('click', (e) => {
+            if (e.target === letterModal) {
+                letterModal.classList.remove('active');
+                envelope.classList.remove('open');
+            }
+        });
+        
+        // ===== TIMELINE SCROLL ANIMATION =====
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2, rootMargin: '-50px' });
+        
+        timelineItems.forEach(item => timelineObserver.observe(item));
+        
+        // ===== PHOTO LIGHTBOX =====
+        const polaroids = document.querySelectorAll('.polaroid');
+        const photoLightbox = document.getElementById('photoLightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const closeLightbox = document.getElementById('closeLightbox');
+        
+        polaroids.forEach(polaroid => {
+            polaroid.addEventListener('click', () => {
+                const imgSrc = polaroid.getAttribute('data-image');
+                lightboxImage.src = imgSrc;
+                photoLightbox.classList.add('active');
+            });
+        });
+        
+        closeLightbox.addEventListener('click', () => {
+            photoLightbox.classList.remove('active');
+        });
+        
+        photoLightbox.addEventListener('click', (e) => {
+            if (e.target === photoLightbox) {
+                photoLightbox.classList.remove('active');
+            }
+        });
+        
+        // ===== CLICK PARTICLE EFFECT =====
+        document.addEventListener('click', (e) => {
+            createParticle(e.clientX, e.clientY);
+        });
+        
+        function createParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            particle.style.fontSize = Math.random() * 10 + 10 + 'px';
+            
+            const hearts = ['💕', '💖', '💗', '✨', '💫', '🌟'];
+            particle.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+            
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 2000);
+        }
+        
+        // ===== CANVAS BACKGROUND ANIMATION =====
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null };
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        document.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.color = `rgba(${255}, ${Math.random() * 100 + 100}, ${Math.random() * 150 + 100}, ${Math.random() * 0.5 + 0.2})`;
+                this.type = Math.random() > 0.7 ? 'heart' : 'circle';
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                // Mouse interaction
+                if (mouse.x != null) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const forceDirectionX = dx / distance;
+                    const forceDirectionY = dy / distance;
+                    const maxDistance = 100;
+                    const force = (maxDistance - distance) / maxDistance;
+                    const directionX = forceDirectionX * force * 2;
+                    const directionY = forceDirectionY * force * 2;
+                    
+                    if (distance < maxDistance) {
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    }
+                }
+                
+                // Boundary check
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                
+                if (this.type === 'heart') {
+                    const topCurveHeight = this.size * 0.3;
+                    ctx.moveTo(this.x, this.y + topCurveHeight);
+                    ctx.bezierCurveTo(
+                        this.x, this.y,
+                        this.x - this.size / 2, this.y,
+                        this.x - this.size / 2, this.y + topCurveHeight
+                    );
+                    ctx.bezierCurveTo(
+                        this.x - this.size / 2, this.y + (this.size + topCurveHeight) / 2,
+                        this.x, this.y + (this.size + topCurveHeight) / 2,
+                        this.x, this.y + this.size
+                    );
+                    ctx.bezierCurveTo(
+                        this.x, this.y + (this.size + topCurveHeight) / 2,
+                        this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2,
+                        this.x + this.size / 2, this.y + topCurveHeight
+                    );
+                    ctx.bezierCurveTo(
+                        this.x + this.size / 2, this.y,
+                        this.x, this.y,
+                        this.x, this.y + topCurveHeight
+                    );
+                } else {
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                }
+                
+                ctx.fill();
+            }
+        }
+        
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.min(100, Math.floor((canvas.width * canvas.height) / 15000));
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+        
+        initParticles();
+        animateParticles();
+        
+        // Reinitialize particles on resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                resizeCanvas();
+                initParticles();
+            }, 250);
+        });
+    </script>
+</body>
+</html>
