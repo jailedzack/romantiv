@@ -384,9 +384,24 @@
 
         <!-- Put your song here -->
         <audio id="audioPlayer" loop>
-            <source src="./audio/our-song.mp3" type="audio/mpeg">
+            <source src="https://drive.google.com/uc?export=download&id=1bC17GQO4-Sv3dAcx4Drk2jeCKsbWFlUJ" type="audio/mp3">
             Your browser does not support the audio element.
         </audio>
+
+        <script>
+const audio = document.getElementById('bg-music');
+
+// Attempt immediate playback on load
+audio.play().catch(error => {
+    console.log("Autoplay blocked. Waiting for first interaction.");
+});
+
+// Force play on the very first click/tap anywhere on the page
+document.addEventListener('click', function unlockAudio() {
+    audio.play();
+    document.removeEventListener('click', unlockAudio);
+}, { once: true });
+</script>
     </div>
 
 
@@ -411,27 +426,14 @@
 
                 <div class="glass-card rounded-3xl p-8 mb-16 inline-block">
 
-                    <!--
-                        Relationship started:
-                        November 10, 2025
-
-                        9 Monthsary:
-                        August 10, 2026
-                    -->
-
                     <script>
                         const START_DATE = "2025-11-10T00:00:00";
                     </script>
 
                     <div
                         id="timer"
-                        class="grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-4"
+                        class="grid grid-cols-3 md:grid-cols-5 gap-3 md:gap-4"
                     >
-
-                        <div class="digit-card rounded-xl p-3 md:p-4 min-w-[70px] md:min-w-[90px]">
-                            <div id="years" class="text-2xl md:text-3xl font-bold text-gold">0</div>
-                            <div class="text-xs md:text-sm text-blush/70 mt-1">Years</div>
-                        </div>
 
                         <div class="digit-card rounded-xl p-3 md:p-4 min-w-[70px] md:min-w-[90px]">
                             <div id="months" class="text-2xl md:text-3xl font-bold text-rose">0</div>
@@ -488,7 +490,7 @@
                 </div>
 
                 <p class="text-blush/60 text-sm animate-pulse">
-                    Click the envelope to open
+                    စာအိတ်ကို နှိပ်ပြီး ဖွင့်ကြည့်ပါနော်... ✨
                 </p>
 
             </div>
@@ -544,7 +546,7 @@
                                 <div class="glass-card rounded-2xl p-6">
 
                                     <div class="text-gold font-semibold mb-2">
-                                        November 10, 2025
+                                        November 13, 2025
                                     </div>
 
                                     <h3 class="font-serif text-xl mb-2">
@@ -771,10 +773,7 @@
         <section class="py-20 px-4">
 
             <div class="max-w-6xl mx-auto">
-
-                <h2 class="font-serif text-4xl md:text-5xl text-center mb-16 gradient-text">
-                    Our Precious Memories
-                </h2>
+ျ
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
@@ -783,7 +782,7 @@
 
                     <div
                         class="polaroid glass-card rounded-lg p-4 cursor-pointer"
-                        data-image="./images/photo1.jpg"
+                        data-image="https://lh3.googleusercontent.com/d/1RmLw9i-xXPZ7i7iB4WSenx3G1S2_bLp2"
                     >
 
                         <div class="tape"></div>
@@ -791,7 +790,7 @@
                         <div class="aspect-square bg-gradient-to-br from-rose/20 to-blush/20 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
 
                             <img
-                                src="https://drive.google.com/file/d/1RmLw9i-xXPZ7i7iB4WSenx3G1S2_bLp2/view?usp=sharing"
+                                src="https://lh3.googleusercontent.com/d/1RmLw9i-xXPZ7i7iB4WSenx3G1S2_bLp2"
                                 alt="Memory 1"
                                 class="w-full h-full object-cover"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
@@ -814,15 +813,14 @@
 
                     <div
                         class="polaroid glass-card rounded-lg p-4 cursor-pointer"
-                        data-image="./images/photo2.jpg"
+                        data-image="https://lh3.googleusercontent.com/d/1DpcxbsA3aEPluC4HyD7jfPLulwCsvKgo"
                     >
-
                         <div class="tape"></div>
 
                         <div class="aspect-square bg-gradient-to-br from-blush/20 to-gold/20 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
 
                             <img
-                                src="./images/photo2.jpg"
+                                src="https://lh3.googleusercontent.com/d/1DpcxbsA3aEPluC4HyD7jfPLulwCsvKgo"
                                 alt="Memory 2"
                                 class="w-full h-full object-cover"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
@@ -845,7 +843,7 @@
 
                     <div
                         class="polaroid glass-card rounded-lg p-4 cursor-pointer"
-                        data-image="./images/photo3.jpg"
+                        data-image="https://lh3.googleusercontent.com/d/14C17feQmow73PbyiXO9P7Mc5kYKYH-4W"
                     >
 
                         <div class="tape"></div>
@@ -853,7 +851,7 @@
                         <div class="aspect-square bg-gradient-to-br from-gold/20 to-rose/20 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
 
                             <img
-                                src="./images/photo3.jpg"
+                                src="https://lh3.googleusercontent.com/d/14C17feQmow73PbyiXO9P7Mc5kYKYH-4W"
                                 alt="Memory 3"
                                 class="w-full h-full object-cover"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
@@ -876,7 +874,7 @@
 
                     <div
                         class="polaroid glass-card rounded-lg p-4 cursor-pointer"
-                        data-image="./images/photo4.jpg"
+                        data-image="https://lh3.googleusercontent.com/d/1evBvE1AOmiBuxwyD_lc3ahTvUdthRuLE"
                     >
 
                         <div class="tape"></div>
@@ -884,7 +882,7 @@
                         <div class="aspect-square bg-gradient-to-br from-rose/20 to-gold/20 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
 
                             <img
-                                src="./images/photo4.jpg"
+                                src="https://lh3.googleusercontent.com/d/1evBvE1AOmiBuxwyD_lc3ahTvUdthRuLE"
                                 alt="Memory 4"
                                 class="w-full h-full object-cover"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
@@ -907,7 +905,7 @@
 
                     <div
                         class="polaroid glass-card rounded-lg p-4 cursor-pointer"
-                        data-image="./images/photo5.jpg"
+                        data-image="https://lh3.googleusercontent.com/d/1SUcINeUmqsN6qFfmzo52_NrtxbjhzzM8"
                     >
 
                         <div class="tape"></div>
@@ -915,7 +913,7 @@
                         <div class="aspect-square bg-gradient-to-br from-blush/20 to-rose/20 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
 
                             <img
-                                src="./images/photo5.jpg"
+                                src="https://lh3.googleusercontent.com/d/1SUcINeUmqsN6qFfmzo52_NrtxbjhzzM8"
                                 alt="Memory 5"
                                 class="w-full h-full object-cover"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
@@ -938,7 +936,7 @@
 
                     <div
                         class="polaroid glass-card rounded-lg p-4 cursor-pointer"
-                        data-image="./images/photo6.jpg"
+                        data-image="https://lh3.googleusercontent.com/d/15cx37V_R-Sp28H15A8aLYOke8eWm8nnj"
                     >
 
                         <div class="tape"></div>
@@ -946,7 +944,7 @@
                         <div class="aspect-square bg-gradient-to-br from-gold/20 to-blush/20 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
 
                             <img
-                                src="./images/photo6.jpg"
+                                src="https://lh3.googleusercontent.com/d/15cx37V_R-Sp28H15A8aLYOke8eWm8nnj"
                                 alt="Memory 6"
                                 class="w-full h-full object-cover"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
@@ -1034,39 +1032,18 @@
 
 
                 <h2 class="font-serif text-3xl md:text-4xl mb-6 gradient-text">
-                    Happy 9 Monthsary, My Love 💕
+                     Happy 9th Monthsary ပါ သဲတုံရေ... ❤️
                 </h2>
 
 
                 <div class="space-y-4 text-blush/90 leading-relaxed text-left md:text-center">
 
                     <p>
-                        Nine months ago, on November 10, 2025, our story began.
-                        Since then, you've become such a beautiful part of my life,
-                        and every month with you has given me another reason to smile.
-                    </p>
-
-                    <p>
-                        These past 9 months have been filled with so many little
-                        moments that I will always treasure — the laughs, the
-                        conversations, the random moments, and everything in between.
-                    </p>
-
-                    <p>
-                        Thank you for being beside me, for making ordinary days
-                        feel special, and for giving me someone to share all these
-                        memories with.
-                    </p>
-
-                    <p>
-                        I may not always know what the future will look like,
-                        but I know that I'm grateful for every moment we've had
-                        together and every moment still waiting for us.
-                    </p>
-
-                    <p class="font-serif text-xl text-gold mt-8">
-                        Happy 9 Monthsary, my love 💕<br>
-                        Here's to us, today and always.
+​အချိန်တွေ ကုန်လွန်တာ တကယ်ကို မြန်လိုက်တာနော်... တနေ့တနေ့နဲ့ အခုဆိုရင် မောင်တို့နှစ်ယောက် ချစ်သူသက်တမ်း ၉ လဆိုတဲ့ အချိန်အတိုင်းအတာတစ်ခုကို အတူတူ ရောက်ရှိလာခဲ့ပြီ။
+​ဒီ 9 လတာ ကာလအတွင်းမှာ မောင့်ရဲ့ ကမ္ဘာလေးထဲကို သဲတုံ ဝင်ရောက်လာခဲ့လို့ ရရှိခဲ့တဲ့ ပျော်ရွှင်မှုတွေ၊ စိတ်အေးချမ်းမှုတွေနဲ့ အမှတ်တရကောင်းတွေကို ရေတွက်လို့တောင် ကုန်နိုင်မှာ မဟုတ်ပါဘူး။ မောင် စိတ်ဓာတ်ကျတဲ့ နေ့တွေ၊ ပင်ပန်းတဲ့ နေ့တွေမှာ သဲတုံ့ရဲ့ ဂရုစိုက်မှု၊ နွေးထွေးတဲ့ စကားလုံးလေးတွေနဲ့ အနားမှာ အမြဲရှိပေးခဲ့တာဟာ မောင့်အတွက်တော့ အကြီးမားဆုံး အင်အားပါပဲ။
+မောင်တို့ကြားမှာ တစ်ခါတလေ စိတ်ကောက်တာ၊ သဘောထားမတိုက်ဆိုင်လို့ ရန်ဖြစ်မိတာလေးတွေ ရှိခဲ့ဖူးပေမဲ့ အဲဒီအရာတွေက မောင်တို့ရဲ့ သံယောဇဉ်ကို ပိုပြီးတော့ပဲ ခိုင်မြဲစေခဲ့ပါတယ်။ ဘယ်လို အခက်အခဲပဲရှိရှိ တယောက်လက်ကို တယောက် ပိုပြီး မြဲမြဲဆုပ်ကိုင်ဖို့ပဲ မောင်စဉ်းစားခဲ့တာပါ။
+မောင့်ရဲ့ နေ့ရက်တွေကို အရောင်ခြယ်ပေးခဲ့တဲ့အတွက်၊ မောင့်ရဲ့ အချစ်ဆုံး၊ အားကိုးရဆုံးနဲ့ အလိုလိုက်ဆုံး သဲတုံလေး ဖြစ်ပေးခဲ့တဲ့အတွက် အရမ်းကျေးဇူးတင်ပါတယ်နော်။ ရှေ့ဆက်မယ့် နေ့ရက်ပေါင်းများစွာမှာလည်း သဲတုံ့လက်ကို လုံးဝ လက်လွှတ်မပေးဘဲ အမြဲတမ်း ပုခုံးချင်းယှဉ်ပြီး လျှောက်လှမ်းသွားမှာပါ။
+​၉ လပြည့်မှသည် ရာသက်ပန်အထိ တယောက်နား တယောက် အမြဲရှိနေပေးကြရအောင်နော်... အရမ်းချစ်ပါတယ် သဲတုံရေ... ✨💖"
                     </p>
 
                 </div>
@@ -1212,114 +1189,47 @@
         // ==========================================
 
         function updateTimer() {
-
             const start = new Date(START_DATE);
             const now = new Date();
 
-            let years =
-                now.getFullYear() -
-                start.getFullYear();
-
-            let months =
-                now.getMonth() -
-                start.getMonth();
-
-
-            if (months < 0) {
-
-                years--;
-
-                months += 12;
-
-            }
-
+            // Calculate total elapsed months straight away
+            let totalMonths = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
 
             let anniversary = new Date(
-                start.getFullYear() + years,
-                start.getMonth() + months,
+                start.getFullYear(),
+                start.getMonth() + totalMonths,
                 start.getDate(),
                 start.getHours(),
                 start.getMinutes(),
                 start.getSeconds()
             );
 
-
-            /*
-                If the current date/time hasn't reached
-                this month's anniversary yet, move back
-                one month.
-            */
-
+            // If the current date hasn't reached this month's exact anniversary time, step back one month
             if (anniversary > now) {
-
-                months--;
-
-                if (months < 0) {
-
-                    years--;
-
-                    months += 12;
-
-                }
-
-
+                totalMonths--;
                 anniversary = new Date(
-                    start.getFullYear() + years,
-                    start.getMonth() + months,
+                    start.getFullYear(),
+                    start.getMonth() + totalMonths,
                     start.getDate(),
                     start.getHours(),
                     start.getMinutes(),
                     start.getSeconds()
                 );
-
             }
-
 
             const diff = now - anniversary;
 
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-            const days = Math.floor(
-                diff /
-                (1000 * 60 * 60 * 24)
-            );
-
-
-            const hours = Math.floor(
-                (diff % (1000 * 60 * 60 * 24)) /
-                (1000 * 60 * 60)
-            );
-
-
-            const minutes = Math.floor(
-                (diff % (1000 * 60 * 60)) /
-                (1000 * 60)
-            );
-
-
-            const seconds = Math.floor(
-                (diff % (1000 * 60)) /
-                1000
-            );
-
-
-            document.getElementById('years').textContent =
-                String(years).padStart(2, '0');
-
-            document.getElementById('months').textContent =
-                String(months).padStart(2, '0');
-
-            document.getElementById('days').textContent =
-                String(days).padStart(2, '0');
-
-            document.getElementById('hours').textContent =
-                String(hours).padStart(2, '0');
-
-            document.getElementById('minutes').textContent =
-                String(minutes).padStart(2, '0');
-
-            document.getElementById('seconds').textContent =
-                String(seconds).padStart(2, '0');
-
+            // Update DOM elements (Ensure the 'years' line is completely removed)
+            document.getElementById('months').textContent = String(totalMonths).padStart(2, '0');
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
         }
 
 
@@ -1908,4 +1818,3 @@
 
 </body>
 </html>
-```
